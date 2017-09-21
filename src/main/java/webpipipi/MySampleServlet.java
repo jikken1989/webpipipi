@@ -2,15 +2,13 @@ package webpipipi;
 
 import java.io.IOException;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 
 
@@ -21,32 +19,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MySampleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	ApplicationContext app;
+	@Autowired
+
+	private MyBean mybean1;
+
 
 	@Override
-	public void init() {
 
-		super.init();
-
-		app = new ClassPathXmlApplicationContext("/spring/application-config.xml");
-
-	}
-
-
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MySampleServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		// TODO Auto-generated method stub
+
+			super.init();
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+
 	}
 
 	/**
@@ -54,7 +39,10 @@ public class MySampleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		request.setAttribute("mybean", mybean1);
+		request.getRequestDispatcher("/index.jsp").forward(request,response);
+
 	}
 
 	/**
@@ -62,7 +50,15 @@ public class MySampleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		String message = request.getParameter("message");
+		mybean1.addMessage(message);
+		response.sendRedirect("sample");
+
 	}
+
+
+
+
 
 }
