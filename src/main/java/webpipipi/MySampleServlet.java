@@ -20,18 +20,16 @@ public class MySampleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-
 	private MyBean mybean1;
 
 
 	@Override
-
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-
-			super.init();
-			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
+		System.out.println("サーブレット入る");
+		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+		System.out.println(this);
 	}
 
 	/**
@@ -41,8 +39,8 @@ public class MySampleServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		request.setAttribute("mybean", mybean1);
-		request.getRequestDispatcher("/index.jsp").forward(request,response);
-
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		System.out.println("doGet入る");
 	}
 
 	/**
@@ -54,11 +52,9 @@ public class MySampleServlet extends HttpServlet {
 		String message = request.getParameter("message");
 		mybean1.addMessage(message);
 		response.sendRedirect("sample");
+		System.out.println("doPost入る");
 
 	}
-
-
-
 
 
 }

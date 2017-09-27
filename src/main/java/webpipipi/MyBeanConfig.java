@@ -11,9 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class MyBeanConfig {
 
 	@Bean
-
 	public MyBean mybean() {
-
+		System.out.println("MyBeanConfig入る");
 		return new MyBean();
 
 	}

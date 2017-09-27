@@ -19,19 +19,21 @@ public class MyBean {
 	public MyBean() {
 
 		super();
-		messages.add("ビーンサンプル１");
+		messages.add("beansample1");
 
 	}
 
 
 	public void addMessage(String message) {
 
+		System.out.println(message);
+
 		messages.add(message);
 
 	}
 
 	public String getMessage(int n) {
-
+		System.out.println("n = " + n);
 		return messages.get(n);
 
 	}
@@ -40,7 +42,7 @@ public class MyBean {
 	public void setMessage(int n,String message) {
 
 		messages.set(n,message);
-
+		System.out.println("MyBean SetMessage入る");
 	}
 
 
@@ -50,7 +52,7 @@ public class MyBean {
 
 	}
 
-	public void setMessages(List<String> Messages) {
+	public void setMessages(List<String> messages) {
 
 		this.messages = messages;
 
